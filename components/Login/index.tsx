@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Statistic } from 'antd';
 import type { ChangeEvent } from 'react';
 import type { NextPage } from 'next';
 import styles from './index.module.scss';
-import Countdown from 'antd/lib/statistic/Countdown';
+
+const { Countdown } = Statistic;
 
 interface IProps {
   isShow: boolean;

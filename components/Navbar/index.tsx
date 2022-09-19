@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button } from 'antd';
-import Login from '@/components/Login';
+import Login from 'components/Login';
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import { navs } from './config';
