@@ -10,16 +10,23 @@
   },
   "dependencies": {
     "antd": "^4.23.0",
+    "axios": "^0.27.2",
+    "date-fns": "^2.29.3",
+    "js-base64": "^3.7.2",
+    "md5": "^2.3.0",
     "mockjs": "^1.1.0",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.2",
     "@types/mockjs": "^1.0.6",
     "@types/node": "18.7.15",
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
+    "@types/xml2js": "^0.4.11",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
     "sass": "^1.54.8",
