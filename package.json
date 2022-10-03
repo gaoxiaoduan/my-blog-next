@@ -12,12 +12,15 @@
     "antd": "^4.23.0",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
+    "iron-session": "^6.2.1",
     "js-base64": "^3.7.2",
     "md5": "^2.3.0",
     "mockjs": "^1.1.0",
+    "mysql2": "^2.3.3",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "typeorm": "^0.3.10",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

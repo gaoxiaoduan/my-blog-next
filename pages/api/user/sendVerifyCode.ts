@@ -2,14 +2,18 @@ import { format } from 'date-fns';
 import md5 from 'md5';
 import { encode } from 'js-base64';
 import { parseString } from 'xml2js';
+import { withIronSessionApiRoute } from 'iron-session/next';
+import { ironOptions } from 'config';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { ICommonResponse } from '..';
+import type { ICommonResponse, ISession } from '..';
 
-export default async function sendVerifyCode(
+export default withIronSessionApiRoute(sendVerifyCode, ironOptions);
+async function sendVerifyCode(
   req: NextApiRequest,
   res: NextApiResponse<ICommonResponse>
 ) {
   if (req.method === 'POST') {
+    const session: ISession = req.session;
     const { to = '', templateId = '1' } = req.body;
     const appId = '8a216da882f1f59401835453f4431101';
     const ACCOUNT_SID = '8a216da882f1f59401835453f34010fa';
@@ -38,11 +42,12 @@ export default async function sendVerifyCode(
       }),
       headers,
     }).then((res) => res.text());
-    parseString(response, (err: any, result: any) => {
+    parseString(response, async (err: any, result: any) => {
       if (err) return console.error(err);
-      // console.log(result);
       const { statusCode, templateSMS, statusMsg } = result.Response;
       if (statusCode && statusCode?.at(0) === '000000') {
+        session.verifyCode = verifyCode;
+        await session.save();
         res.status(200).json({
           code: 0,
           msg: statusMsg,

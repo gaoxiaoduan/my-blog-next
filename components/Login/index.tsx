@@ -33,7 +33,23 @@ const Login: NextPage<IProps> = (props) => {
     onClose?.();
   };
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    if (!form?.phone || form.phone.length !== 11) {
+      return message.info('请输入有效手机号～');
+    }
+    if (!form?.verify || !form.verify.trim()) {
+      return message.info('请输入验证码～');
+    }
+    console.log(form);
+    const res = await request.post('/api/user/login', { ...form });
+    console.log(res);
+    if (res.code === 0) {
+      onClose?.();
+      message.success('登录成功');
+    } else {
+      return message.error(res.msg || '未知错误');
+    }
+  };
 
   const handleOAuthGithub = () => {};
 
