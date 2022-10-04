@@ -7,7 +7,7 @@ interface IProps {
   children: ReactElement;
 }
 
-enableStaticRendering(true);
+enableStaticRendering(!process.browser);
 const StoreContext = createContext({});
 
 export const StoreProvider = ({ initialValue, children }: IProps) => {

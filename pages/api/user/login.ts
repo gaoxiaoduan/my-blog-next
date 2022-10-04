@@ -1,7 +1,10 @@
 import { withIronSessionApiRoute } from 'iron-session/next';
+import { Cookie } from 'next-cookie';
+
 import { ironOptions } from 'config';
 import { connectToDatabase } from 'db';
 import { User, UserAuth } from 'db/entity';
+import { setCookie } from 'utils';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { ICommonResponse, ISession } from '..';
 
@@ -12,6 +15,7 @@ async function login(
 ) {
   if (req.method === 'POST') {
     const session: ISession = req.session;
+    const cookies = Cookie.fromApiRoute(req, res);
     const { phone, verify, identity_type = 'phone' } = req.body;
     const AppDataSource = await connectToDatabase();
     const userAuthRepository = AppDataSource.getRepository(UserAuth);
@@ -35,8 +39,7 @@ async function login(
         session.avatar = avatar;
 
         await session.save();
-        // TODO:cookie
-
+        setCookie(cookies, user);
         res?.status(200).json({
           code: 0,
           msg: '登录成功',
@@ -69,8 +72,7 @@ async function login(
         session.nickname = nickname;
         session.avatar = avatar;
         await session.save();
-        // TODO:cookie
-
+        setCookie(cookies, resUserAuth.user);
         res?.status(200).json({
           code: 0,
           msg: '登录成功',

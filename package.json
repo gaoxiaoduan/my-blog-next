@@ -19,6 +19,7 @@
     "mockjs": "^1.1.0",
     "mysql2": "^2.3.3",
     "next": "12.2.5",
+    "next-cookie": "^2.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "reflect-metadata": "^0.1.13",

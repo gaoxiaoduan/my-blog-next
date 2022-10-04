@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Avatar, Button, Dropdown, Menu, MenuProps } from 'antd';
+import { Avatar, Button, Dropdown, Menu, MenuProps, message } from 'antd';
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 
 import Login from 'components/Login';
 import { useStore } from 'store';
+import request from 'service/fetch';
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import { navs } from './config';
@@ -26,8 +28,22 @@ const Navbar: NextPage = () => {
     setIsShowLogin(false);
   };
 
+  const handleLoginOut = async () => {
+    const res = await request.post('/api/user/loginOut');
+    if (res.code === 0) {
+      store.user.setUserInfo({});
+      message.success(res.msg || '退出成功');
+    } else message.error(res.msg || '未知错误');
+  };
+
   const handleMenuClick: MenuProps['onClick'] = (e) => {
-    console.log('click', e);
+    switch (e.key) {
+      case 'loginOut':
+        handleLoginOut();
+        break;
+      default:
+        break;
+    }
   };
 
   const renderMenu = (
@@ -77,4 +93,4 @@ const Navbar: NextPage = () => {
   );
 };
 
-export default Navbar;
+export default observer(Navbar);
