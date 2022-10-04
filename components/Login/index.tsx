@@ -41,7 +41,10 @@ const Login: NextPage<IProps> = (props) => {
       return message.info('请输入验证码～');
     }
     console.log(form);
-    const res = await request.post('/api/user/login', { ...form });
+    const res = await request.post('/api/user/login', {
+      ...form,
+      identity_type: 'phone',
+    });
     console.log(res);
     if (res.code === 0) {
       onClose?.();
