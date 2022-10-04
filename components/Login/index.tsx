@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { message, Statistic } from 'antd';
 import request from 'service/fetch';
+import { useStore } from 'store';
 import type { ChangeEvent } from 'react';
 import type { NextPage } from 'next';
 import styles from './index.module.scss';
@@ -20,6 +21,7 @@ const Login: NextPage<IProps> = (props) => {
     phone: '',
     verify: '',
   });
+  const store = useStore();
 
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,6 +51,8 @@ const Login: NextPage<IProps> = (props) => {
     if (res.code === 0) {
       onClose?.();
       message.success('登录成功');
+      store.user.setUserInfo(res.data);
+      console.log('store::', store);
     } else {
       return message.error(res.msg || '未知错误');
     }

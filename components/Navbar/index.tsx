@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button } from 'antd';
+import { Avatar, Button, Dropdown, Menu, MenuProps } from 'antd';
+import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
+
 import Login from 'components/Login';
+import { useStore } from 'store';
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import { navs } from './config';
@@ -10,6 +13,8 @@ import { navs } from './config';
 const Navbar: NextPage = () => {
   const { pathname } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
+  const store = useStore();
+  const { userId, avatar } = store.user.userInfo;
 
   const handleGotoEditorPage = () => {};
 
@@ -20,6 +25,28 @@ const Navbar: NextPage = () => {
   const handleClose = () => {
     setIsShowLogin(false);
   };
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    console.log('click', e);
+  };
+
+  const renderMenu = (
+    <Menu
+      onClick={handleMenuClick}
+      items={[
+        {
+          key: 'home',
+          label: '个人主页',
+          icon: <HomeOutlined />,
+        },
+        {
+          key: 'loginOut',
+          label: '退出系统',
+          icon: <LoginOutlined />,
+        },
+      ]}
+    />
+  );
 
   return (
     <div className={styles.navbar}>
@@ -35,9 +62,15 @@ const Navbar: NextPage = () => {
       </section>
       <section className={styles.operationArea}>
         <Button onClick={handleGotoEditorPage}>写文章</Button>
-        <Button type="primary" onClick={handleLogin}>
-          登录
-        </Button>
+        {userId ? (
+          <Dropdown overlay={renderMenu} placement="bottomCenter" arrow>
+            <Avatar src={avatar} size={32} />
+          </Dropdown>
+        ) : (
+          <Button type="primary" onClick={handleLogin}>
+            登录
+          </Button>
+        )}
       </section>
       {isShowLogin && <Login isShow={isShowLogin} onClose={handleClose} />}
     </div>

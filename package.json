@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.23.0",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
@@ -36,6 +37,8 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
+    "mobx": "^6.6.2",
+    "mobx-react-lite": "^3.4.0",
     "sass": "^1.54.8",
     "stylelint": "^14.11.0",
     "stylelint-config-standard-scss": "^5.0.0",
