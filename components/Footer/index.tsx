@@ -1,9 +1,10 @@
+import styles from './index.module.scss';
 import type { NextPage } from 'next';
 
 const Footer: NextPage = () => {
   return (
-    <div>
-      <span>Footer</span>
+    <div className={styles.footer}>
+      <p>Blog - Next.js</p>
     </div>
   );
 };
