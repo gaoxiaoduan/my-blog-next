@@ -19,6 +19,7 @@ specifiers:
   eslint-config-next: 12.2.5
   iron-session: ^6.2.1
   js-base64: ^3.7.2
+  markdown-to-jsx: ^7.1.7
   markdown-to-txt: ^2.0.1
   md5: ^2.3.0
   mobx: ^6.6.2
@@ -46,6 +47,7 @@ dependencies:
   date-fns: 2.29.3
   iron-session: 6.2.1_next@12.2.5
   js-base64: 3.7.2
+  markdown-to-jsx: 7.1.7_react@18.2.0
   markdown-to-txt: 2.0.1
   md5: 2.3.0
   mockjs: 1.1.0
@@ -3085,6 +3087,15 @@ packages:
 
   /markdown-table/3.0.2:
     resolution: {integrity: sha512-y8j3a5/DkJCmS5x4dMCQL+OR0+2EAq3DOtio1COSHsmW2BGXnNCK3v12hJt1LrUz5iZH5g0LmuYOjDdI+czghA==}
+    dev: false
+
+  /markdown-to-jsx/7.1.7_react@18.2.0:
+    resolution: {integrity: sha512-VI3TyyHlGkO8uFle0IOibzpO1c1iJDcXcS/zBrQrXQQvJ2tpdwVzVZ7XdKsyRz1NdRmre4dqQkMZzUHaKIG/1w==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      react: '>= 0.14.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /markdown-to-txt/2.0.1:
