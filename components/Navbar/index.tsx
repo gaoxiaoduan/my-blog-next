@@ -13,12 +13,19 @@ import type { NextPage } from 'next';
 import { navs } from './config';
 
 const Navbar: NextPage = () => {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
   const store = useStore();
   const { userId, avatar } = store.user.userInfo;
 
-  const handleGotoEditorPage = () => {};
+  const handleGotoEditorPage = () => {
+    if (userId) {
+      // 跳转编辑页
+      push('/editor/new');
+    } else {
+      message.warning('请先登录～');
+    }
+  };
 
   const handleLogin = () => {
     setIsShowLogin(true);
@@ -38,6 +45,10 @@ const Navbar: NextPage = () => {
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     switch (e.key) {
+      case 'personalPage':
+        // 跳转个人主页
+        push(`/user/${userId}`);
+        break;
       case 'loginOut':
         handleLoginOut();
         break;
@@ -51,7 +62,7 @@ const Navbar: NextPage = () => {
       onClick={handleMenuClick}
       items={[
         {
-          key: 'home',
+          key: 'personalPage',
           label: '个人主页',
           icon: <HomeOutlined />,
         },
@@ -79,7 +90,7 @@ const Navbar: NextPage = () => {
       <section className={styles.operationArea}>
         <Button onClick={handleGotoEditorPage}>写文章</Button>
         {userId ? (
-          <Dropdown overlay={renderMenu} placement="bottomCenter" arrow>
+          <Dropdown overlay={renderMenu} placement="bottom" arrow>
             <Avatar src={avatar} size={32} />
           </Dropdown>
         ) : (

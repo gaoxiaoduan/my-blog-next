@@ -8,12 +8,20 @@ interface IProps extends AppProps {
 }
 
 function MyApp({ Component, pageProps, initialValue }: IProps) {
+  const renderLayout = () => {
+    // @ts-ignore
+    if (Component?.layout === null) {
+      return <Component {...pageProps} />;
+    } else {
+      return (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      );
+    }
+  };
   return (
-    <StoreProvider initialValue={initialValue}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </StoreProvider>
+    <StoreProvider initialValue={initialValue}>{renderLayout()}</StoreProvider>
   );
 }
 

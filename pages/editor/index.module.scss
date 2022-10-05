@@ -1,0 +1,21 @@
+.container {
+  margin: 0 auto;
+
+  .operation {
+    display: flex;
+
+    .title {
+      width: 80%;
+    }
+
+    .tag {
+      width: 15%;
+    }
+
+    .button,
+    .goBack {
+      width: 5%;
+      margin-left: 10px;
+    }
+  }
+}
