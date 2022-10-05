@@ -14,6 +14,14 @@ export type IComment = {
   update_time: Date,
 };
 
+export type ITag = {
+  id: number,
+  title: string,
+  icon: string,
+  follow_count: number,
+  article_count: number,
+};
+
 export type IArticle = {
   id: number,
   title: string,

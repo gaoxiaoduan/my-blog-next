@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react';
-import { Button, Input, message } from 'antd';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Button, Input, message, Select } from 'antd';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import '@uiw/react-md-editor/markdown-editor.css';
@@ -11,10 +11,13 @@ import { connectToDatabase } from 'db';
 
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
-import type { IArticle } from 'pages/api';
+import type { IArticle, ITag } from 'pages/api';
 
+interface IArticleExpand extends IArticle {
+  tags: ITag[];
+}
 interface IProps {
-  article: IArticle;
+  article: IArticleExpand;
   articleId: number;
 }
 
@@ -24,7 +27,7 @@ export async function getServerSideProps({ params }: { params: any }) {
   const ArticleRepository = AppDataSource.getRepository(Article);
   const article = await ArticleRepository.findOne({
     where: { id: articleId },
-    relations: ['user'],
+    relations: ['user', 'tags'],
   });
 
   return {
@@ -43,6 +46,16 @@ const ModifyEditor: NextPage<IProps> = (props) => {
   const { push, back } = useRouter();
   const [content, setContent] = useState(article.content || '');
   const [title, setTitle] = useState(article.title || '');
+  const [tagIds, setTagIds] = useState(article?.tags?.map((i) => i.id) || []);
+  const [allTags, setAllTags] = useState([]);
+
+  useEffect(() => {
+    request.get('/api/tag/get').then((res: any) => {
+      if (res?.code === 0) {
+        setAllTags(res?.data?.allTags || []);
+      }
+    });
+  }, []);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e?.target?.value);
@@ -54,6 +67,7 @@ const ModifyEditor: NextPage<IProps> = (props) => {
       id: articleId,
       title,
       content,
+      tagIds,
     });
     if (res.code !== 0) return message.error(res.msg || '未知错误');
     articleId ? push(`/article/${articleId}`) : push('/');
@@ -73,6 +87,20 @@ const ModifyEditor: NextPage<IProps> = (props) => {
           value={title}
           onChange={handleTitleChange}
         />
+        <Select
+          className={styles.tag}
+          mode="multiple"
+          allowClear
+          placeholder="请选择标签"
+          value={tagIds}
+          onChange={setTagIds}
+        >
+          {allTags?.map((tag: any) => (
+            <Select.Option key={tag?.id} value={tag?.id}>
+              {tag?.title}
+            </Select.Option>
+          ))}
+        </Select>
         <Button
           className={styles.button}
           type="primary"

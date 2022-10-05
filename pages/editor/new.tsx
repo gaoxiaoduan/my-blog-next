@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react';
-import { Button, Input, message } from 'antd';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Button, Input, message, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 import dynamic from 'next/dynamic';
@@ -20,6 +20,16 @@ const NewEditor: NextPage = () => {
   const { push, back } = useRouter();
   const [content, setContent] = useState('Hello World');
   const [title, setTitle] = useState('');
+  const [tagIds, setTagIds] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+
+  useEffect(() => {
+    request.get('/api/tag/get').then((res: any) => {
+      if (res?.code === 0) {
+        setAllTags(res?.data?.allTags || []);
+      }
+    });
+  }, []);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e?.target?.value);
@@ -27,7 +37,11 @@ const NewEditor: NextPage = () => {
 
   const handlePublish = async () => {
     if (!title) return message.warning('请输入文章标题～');
-    const res = await request.post('/api/article/publish', { title, content });
+    const res = await request.post('/api/article/publish', {
+      title,
+      content,
+      tagIds,
+    });
     if (res.code !== 0) return message.error(res.msg || '未知错误');
     userId ? push(`/user/${userId}`) : push('/');
     message.success('发布成功');
@@ -46,6 +60,19 @@ const NewEditor: NextPage = () => {
           value={title}
           onChange={handleTitleChange}
         />
+        <Select
+          className={styles.tag}
+          mode="multiple"
+          allowClear
+          placeholder="请选择标签"
+          onChange={setTagIds}
+        >
+          {allTags?.map((tag: any) => (
+            <Select.Option key={tag?.id} value={tag?.id}>
+              {tag?.title}
+            </Select.Option>
+          ))}
+        </Select>
         <Button
           className={styles.button}
           type="primary"
