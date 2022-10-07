@@ -1,5 +1,6 @@
 import App from 'next/app';
 import Layout from 'components/Layout';
+import ErrorBoundary from 'components/ErrorBoundary';
 import { StoreProvider } from 'store';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
@@ -22,7 +23,11 @@ function MyApp({ Component, pageProps, initialValue }: IProps) {
     }
   };
   return (
-    <StoreProvider initialValue={initialValue}>{renderLayout()}</StoreProvider>
+    <ErrorBoundary>
+      <StoreProvider initialValue={initialValue}>
+        {renderLayout()}
+      </StoreProvider>
+    </ErrorBoundary>
   );
 }
 

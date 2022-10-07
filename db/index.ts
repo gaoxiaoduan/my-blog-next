@@ -16,7 +16,7 @@ const AppDataSource = new DataSource({
   database,
   entities: [User, UserAuth, Article, Comment, Tag],
   synchronize: true,
-  logging: process.env.development === 'development',
+  logging: process.env.NODE_ENV === 'development',
 });
 
 export const connectToDatabase = async () => {
