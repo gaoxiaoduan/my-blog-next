@@ -44,11 +44,12 @@ async function redirect(
           Authorization: `token ${access_token}`,
         },
       }).then((res) => res.json());
+      console.log(111, githubUserInfo);
 
       const userAuth = await userAuthRepository.findOne({
         where: {
           identity_type: 'github',
-          identifier: githubClientID,
+          identifier: githubUserInfo?.id,
         },
         relations: ['user'],
       });
@@ -78,7 +79,7 @@ async function redirect(
 
         const userAuth = new UserAuth();
         userAuth.identity_type = 'github';
-        userAuth.identifier = githubClientID;
+        userAuth.identifier = githubUserInfo?.id;
         userAuth.credential = access_token;
         userAuth.user = user;
 
