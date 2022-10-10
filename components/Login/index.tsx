@@ -56,7 +56,11 @@ const Login: NextPage<IProps> = (props) => {
     }
   };
 
-  const handleOAuthGithub = () => {};
+  const handleOAuthGithub = () => {
+    const githubClientId = process.env.NEXT_PUBLIC_CLIENT_ID || '';
+    const githubUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}`;
+    window.location.href = githubUrl;
+  };
 
   const handleGetVerifyCode = async () => {
     if (!form?.phone || form.phone.length !== 11) {

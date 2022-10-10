@@ -7,7 +7,7 @@
 
 - [x] 使用Next.js完成SSR项目开发
 - [x] 使用Node.js开发接口API
-- [x] 掌握登录鉴权逻辑及短信校验逻辑
+- [x] 掌握登录鉴权逻辑及短信校验逻辑（gitHub+OAuth）
 - [x] 掌握基本的MySQL数据库的设计
 - [x] 掌握SSR同构原理
 - [x] 技术栈：antd+mobx+typeorm
