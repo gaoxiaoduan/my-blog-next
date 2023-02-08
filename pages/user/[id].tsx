@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { Avatar, Button, Divider } from 'antd';
 import {
@@ -24,7 +25,10 @@ export async function getServerSideProps({ params }: any) {
         id: Number(userId),
       },
     },
-    relations: ['user', 'tags'],
+    relations: ['user', 'tags', 'comments'],
+    order: {
+      create_time: "DESC"
+    },
   });
 
   return {
@@ -37,10 +41,12 @@ export async function getServerSideProps({ params }: any) {
 
 const UserDetail: NextPage<any> = (props) => {
   const { userInfo = {}, articles = [] } = props;
-  const viewsCount = articles?.reduce(
+  const [mutArticles, setMutArticles] = useState(articles)
+  const viewsCount = mutArticles?.reduce(
     (prev: number, next: any) => prev + next?.views,
     0
   );
+
   return (
     <div className={styles.userDetail}>
       <div className={styles.left}>
@@ -61,9 +67,9 @@ const UserDetail: NextPage<any> = (props) => {
         </div>
         <Divider />
         <div className={styles.article}>
-          {articles?.map((article: any) => (
+          {mutArticles?.map((article: any) => (
             <div key={article?.id}>
-              <ListItem article={article} />
+              <ListItem article={article} isUserHome={true} successDeleteHooks={(id: number) => setMutArticles(mutArticles.filter((item: any) => item.id !== id))} />
               <Divider />
             </div>
           ))}
@@ -75,7 +81,7 @@ const UserDetail: NextPage<any> = (props) => {
           <div className={styles.number}>
             <div className={styles.wrapper}>
               <FundViewOutlined />
-              <span>共创作 {articles?.length} 篇文章</span>
+              <span>共创作 {mutArticles?.length} 篇文章</span>
             </div>
             <div className={styles.wrapper}>
               <FundViewOutlined />

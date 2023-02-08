@@ -13,7 +13,10 @@ interface IProps {
 export async function getServerSideProps() {
   const AppDataSource = await connectToDatabase();
   const articles = await AppDataSource.getRepository(Article).find({
-    relations: ['user'],
+    relations: ['user', 'tags', 'comments'],
+    order: {
+      create_time: "DESC"
+    },
   });
 
   return {

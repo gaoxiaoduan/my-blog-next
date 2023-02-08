@@ -22,6 +22,10 @@ export const EXCEPTION_ARTICLE = {
     code: 2003,
     msg: '未找到文章',
   },
+  REMOVE_FAILED: {
+    code: 2004,
+    msg: '删除文章失败',
+  },
 };
 
 export const EXCEPTION_TAG = {
