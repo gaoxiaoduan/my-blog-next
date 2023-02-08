@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Tabs, Button, message } from 'antd';
+import { Tabs, Button, message, Empty } from 'antd';
 import * as ANTD_ICONS from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 
@@ -8,6 +8,7 @@ import request from 'service/fetch';
 
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
+import Link from 'next/link';
 
 interface IUser {
   id: number;
@@ -15,7 +16,7 @@ interface IUser {
   avatar: string;
 }
 
-interface ITag {
+export interface ITag {
   id: number;
   title: string;
   icon: string;
@@ -46,28 +47,36 @@ const Tag: NextPage = () => {
       type: 'follow',
       tagId
     })
-    if(res.code !==0) return message.error(res?.msg || '关注失败');
+    if (res.code !== 0) return message.error(res?.msg || '关注失败');
     message.success('关注成功');
     setNeedRefresh(!needRefresh);
   };
-  const handleUnFollow =  async (tagId: number) => {
+  const handleUnFollow = async (tagId: number) => {
     const res = await request.post('/api/tag/follow', {
       type: 'unFollow',
       tagId
     })
-    if(res.code !==0) return message.error(res?.msg || '取关失败');
+    if (res.code !== 0) return message.error(res?.msg || '取关失败');
     message.success('取关成功');
     setNeedRefresh(!needRefresh);
   };
 
   const renderFollowItem = () => {
+    if (followTags.length === 0) {
+      return <Empty description='暂无关注标签' />
+    }
+
     return (
       <div className={styles.tags}>
         {followTags?.map((tag) => (
           <div key={tag?.title} className={styles.tagWrapper}>
-            {/* @ts-ignore */}
-            <div>{ANTD_ICONS[tag?.icon]?.render()}</div>
-            <div className={styles.title}>{tag?.title}</div>
+            <Link href={`/tag/${tag.id}`}>
+              <div className={styles.tagLink}>
+                {/* @ts-ignore */}
+                <div>{ANTD_ICONS[tag?.icon]?.render()}</div>
+                <div className={styles.title}>{tag?.title}</div>
+              </div>
+            </Link>
             <div>
               {tag?.follow_count} 关注 {tag?.article_count} 文章
             </div>
@@ -89,9 +98,13 @@ const Tag: NextPage = () => {
       <div className={styles.tags}>
         {allTags?.map((tag) => (
           <div key={tag?.title} className={styles.tagWrapper}>
-            {/* @ts-ignore */}
-            <div>{ANTD_ICONS[tag?.icon]?.render()}</div>
-            <div className={styles.title}>{tag?.title}</div>
+            <Link href={`/tag/${tag.id}`}>
+              <div className={styles.tagLink}>
+                {/* @ts-ignore */}
+                <div>{ANTD_ICONS[tag?.icon]?.render()}</div>
+                <div className={styles.title}>{tag?.title}</div>
+              </div>
+            </Link>
             <div>
               {tag?.follow_count} 关注 {tag?.article_count} 文章
             </div>
@@ -114,14 +127,14 @@ const Tag: NextPage = () => {
         defaultActiveKey="all"
         items={[
           {
-            label: '已关注标签',
-            key: 'follow',
-            children: renderFollowItem(),
-          },
-          {
             label: '全部标签',
             key: 'all',
             children: renderAllItem(),
+          },
+          {
+            label: '已关注标签',
+            key: 'follow',
+            children: renderFollowItem(),
           },
         ]}
       ></Tabs>

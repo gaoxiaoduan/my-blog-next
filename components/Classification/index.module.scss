@@ -1,0 +1,31 @@
+.commonStyle {
+  box-sizing: border-box;
+  display: inline-block;
+  height: auto;
+  margin: 0 8px 0 0;
+  padding: 0 7px;
+  border: 1px solid #d9d9d9;
+  background-color: #fafafa;
+  border-radius: 30px;
+  font-size: 14px;
+  color: #515767;
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.classification {
+  width: 320px;
+  padding: 5px;
+
+  a {
+    /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+    @extend .commonStyle;
+
+    margin-bottom: 10px;
+
+    &:hover {
+      color: #007fff;
+    }
+  }
+}

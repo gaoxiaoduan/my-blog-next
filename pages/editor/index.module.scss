@@ -3,13 +3,14 @@
 
   .operation {
     display: flex;
+    padding: 6px 10px 0;
 
     .title {
-      width: 80%;
+      width: 65%;
     }
 
     .tag {
-      width: 15%;
+      width: 25%;
     }
 
     .button,

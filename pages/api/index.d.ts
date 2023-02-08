@@ -20,6 +20,7 @@ export type ITag = {
   icon: string,
   follow_count: number,
   article_count: number,
+  articles?: IArticle[],
 };
 
 export type IArticle = {

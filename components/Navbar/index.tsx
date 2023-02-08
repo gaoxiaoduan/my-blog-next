@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Avatar, Button, Dropdown, Menu, MenuProps, message } from 'antd';
+import { Avatar, Button, Dropdown, Menu, MenuProps, message, Popover } from 'antd';
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 
@@ -11,6 +11,7 @@ import request from 'service/fetch';
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import { navs } from './config';
+import Classification from 'components/Classification';
 
 const Navbar: NextPage = () => {
   const { pathname, push } = useRouter();
@@ -86,6 +87,10 @@ const Navbar: NextPage = () => {
             </a>
           </Link>
         ))}
+
+        <Popover trigger="hover" content={<Classification />}>
+          <a>分类</a>
+        </Popover>
       </section>
       <section className={styles.operationArea}>
         <Button onClick={handleGotoEditorPage}>写文章</Button>

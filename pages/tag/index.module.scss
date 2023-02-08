@@ -1,6 +1,7 @@
 .tags {
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
 
   .tagWrapper {
     width: 220px;
@@ -8,6 +9,7 @@
     border: 1px solid #f3f3f3;
     padding: 20px;
     margin-right: 20px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,5 +24,39 @@
       font-size: 15px;
       font-weight: bold;
     }
+  }
+
+  .tagLink {
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+.tagInfo {
+  .tagTitleBox {
+    height: 180px;
+    padding: 2rem 0;
+    text-align: center;
+    color: #666;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #f1f1f1;
+
+    svg {
+      width: 50px;
+      height: 50px;
+    }
+
+    & > h1 {
+      margin: -2px 0 2px;
+      color: #666;
+    }
+  }
+
+  .tagInfoListBox {
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 1080px;
+    background-color: #fff;
   }
 }

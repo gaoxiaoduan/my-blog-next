@@ -63,6 +63,7 @@ const ModifyEditor: NextPage<IProps> = (props) => {
 
   const handlePublish = async () => {
     if (!title) return message.warning('请输入文章标题～');
+    if (tagIds.length === 0) return message.warning('请选择标签～')
     const res = await request.post('/api/article/update', {
       id: articleId,
       title,
@@ -71,7 +72,7 @@ const ModifyEditor: NextPage<IProps> = (props) => {
     });
     if (res.code !== 0) return message.error(res.msg || '未知错误');
     articleId ? push(`/article/${articleId}`) : push('/');
-    message.success('更新成功');
+    message.success('更新成功', 1);
   };
 
   const handleContentChange = (value: any) => {
@@ -90,6 +91,7 @@ const ModifyEditor: NextPage<IProps> = (props) => {
         <Select
           className={styles.tag}
           mode="multiple"
+          maxTagCount='responsive'
           allowClear
           placeholder="请选择标签"
           value={tagIds}
