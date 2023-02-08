@@ -12,17 +12,19 @@ import request from 'service/fetch';
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import type { IArticle } from 'pages/api';
+import Highlight from 'components/Highlight';
 
 interface IProps {
   article: IArticle;
   isUserHome?: boolean;
   successDeleteHooks?: Function;
+  keyword?: string
 }
 
 const ListItem: NextPage<IProps> = (props) => {
   const store = useStore();
   const loginUserInfo = store?.user?.userInfo;
-  const { article, isUserHome = false, successDeleteHooks } = props;
+  const { article, isUserHome = false, successDeleteHooks, keyword = '' } = props;
   const { user, tags = [], comments = [] } = article;
 
   const handleDelete = async (id: number, e: React.MouseEvent<HTMLElement, MouseEvent> | undefined,) => {
@@ -39,6 +41,7 @@ const ListItem: NextPage<IProps> = (props) => {
     <Link href={`/article/${article.id}`}>
       <div className={styles.container}>
         <div className={styles.article}>
+
           <div className={styles.userInfo}>
             <span className={styles.name}>{user?.nickname}</span>
             <span className={styles.date}>
@@ -46,8 +49,11 @@ const ListItem: NextPage<IProps> = (props) => {
             </span>
             {tags.length !== 0 && tags.map(tag => <Link href={`/tag/${tag.id}`} key={tag.id}>{tag.title}</Link>)}
           </div>
-          <h4 className={styles.title}>{article?.title}</h4>
+
+          <h4 className={styles.title}><Highlight text={article?.title} search={keyword} /> </h4>
+
           <p className={styles.content}>{markdownToTxt(article?.content)}</p>
+
           <div className={styles.statistics}>
             <EyeOutlined />
             <span className={styles.item}>{article?.views}</span>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Avatar, Button, Dropdown, Menu, MenuProps, message, Popover } from 'antd';
+import { Avatar, Button, Dropdown, Input, Menu, MenuProps, message, Popover } from 'antd';
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 
@@ -12,6 +12,7 @@ import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import { navs } from './config';
 import Classification from 'components/Classification';
+const { Search } = Input;
 
 const Navbar: NextPage = () => {
   const { pathname, push } = useRouter();
@@ -43,6 +44,12 @@ const Navbar: NextPage = () => {
       message.success(res.msg || '退出成功');
     } else message.error(res.msg || '未知错误');
   };
+
+  const onSearch = async (value: string) => {
+    const title = value.trim();
+    if (title === '') return;
+    push(`/search?title=${title}`)
+  }
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     switch (e.key) {
@@ -92,6 +99,11 @@ const Navbar: NextPage = () => {
           <a>分类</a>
         </Popover>
       </section>
+
+      <section className={styles.searchArea}>
+        <Search placeholder="请输入搜索关键字" onSearch={onSearch} />
+      </section>
+
       <section className={styles.operationArea}>
         <Button onClick={handleGotoEditorPage}>写文章</Button>
         {userId ? (

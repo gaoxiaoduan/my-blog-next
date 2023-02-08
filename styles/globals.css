@@ -10,3 +10,8 @@ body {
   background-color: #fff;
   padding: 20px;
 }
+
+.highlight {
+  background-color: #fff;
+  color: #f03535;
+}
