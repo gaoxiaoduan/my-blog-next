@@ -11,7 +11,7 @@ export class Article extends BaseEntity {
   @Column()
   title!: string;
 
-  @Column()
+  @Column('text')
   content!: string;
 
   @Column()

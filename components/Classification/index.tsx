@@ -14,7 +14,6 @@ const Classification: NextPage = () => {
             if (res?.code === 0) {
                 const { allTags = [] } = res?.data || {};
                 setAllTags(allTags)
-                console.log(allTags)
             }
         });
     }, [])

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Avatar, Button, Divider, Input, message } from 'antd';
 import { format } from 'date-fns';
-import MarkDown from 'markdown-to-jsx';
 import { observer } from 'mobx-react-lite';
 
 import { connectToDatabase } from 'db';
@@ -10,9 +10,16 @@ import { Article } from 'db/entity';
 import { useStore } from 'store';
 import request from 'service/fetch';
 
+import "@uiw/react-markdown-preview/markdown.css";
 import styles from './index.module.scss';
 import type { NextPage } from 'next';
 import type { IArticle, IComment } from 'pages/api';
+
+const Markdown = dynamic(
+  () =>
+    import("@uiw/react-md-editor").then((mod) => mod.default.Markdown),
+  { ssr: false }
+);
 
 interface IArticleExpand extends IArticle {
   comments: IComment[] | any[];
@@ -78,7 +85,6 @@ const ArticleInfo: NextPage<IProps> = (props) => {
     ].concat([...comments]);
     setComments(newComments);
     setInputVal('');
-    console.log('res::', res);
     message.success('发表成功');
   };
 
@@ -101,7 +107,7 @@ const ArticleInfo: NextPage<IProps> = (props) => {
             </div>
           </div>
         </div>
-        <MarkDown className={styles.markdown}>{article?.content}</MarkDown>
+        <Markdown source={article?.content} />
       </div>
 
       <div className={styles.divider}></div>

@@ -24,7 +24,7 @@ interface IProps {
 const ListItem: NextPage<IProps> = (props) => {
   const store = useStore();
   const loginUserInfo = store?.user?.userInfo;
-  const { article, isUserHome = false, successDeleteHooks, keyword = '' } = props;
+  const { article, isUserHome = false, successDeleteHooks, keyword = '🀎🀎🀎♾' } = props;
   const { user, tags = [], comments = [] } = article;
 
   const handleDelete = async (id: number, e: React.MouseEvent<HTMLElement, MouseEvent> | undefined,) => {
