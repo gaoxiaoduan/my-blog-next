@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Avatar, Button, Dropdown, Input, Menu, MenuProps, message, Popover } from 'antd';
@@ -85,7 +86,9 @@ const Navbar: NextPage = () => {
 
   return (
     <div className={styles.navbar}>
-      <section className={styles.logoArea}>BLOG</section>
+      <section className={styles.logoArea} onClick={() => push('/')}>
+        <Image src='/images/logo.png' width='40px' height='40px' alt='BLOG' />
+      </section>
       <section className={styles.linkArea}>
         {navs.map((nav) => (
           <Link key={nav.label} href={nav.value}>
