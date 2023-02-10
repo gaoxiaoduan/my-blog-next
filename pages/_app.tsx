@@ -1,5 +1,6 @@
 import App from 'next/app';
 import Layout from 'components/Layout';
+import AdminLayout from 'components/Layout/AdminLayout';
 import ErrorBoundary from 'components/ErrorBoundary';
 import { StoreProvider } from 'store';
 import type { AppProps } from 'next/app';
@@ -11,17 +12,29 @@ interface IProps extends AppProps {
 
 function MyApp({ Component, pageProps, initialValue }: IProps) {
   const renderLayout = () => {
+
     // @ts-ignore
-    if (Component?.layout === null) {
-      return <Component {...pageProps} />;
-    } else {
-      return (
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      );
+    switch (Component?.layout) {
+      case null: {
+        return <Component {...pageProps} />;
+      }
+      case "admin": {
+        return (
+          <AdminLayout>
+            <Component {...pageProps} />
+          </AdminLayout>
+        )
+      }
+      default: {
+        return (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        );
+      }
     }
   };
+
   return (
     <ErrorBoundary>
       <StoreProvider initialValue={initialValue}>

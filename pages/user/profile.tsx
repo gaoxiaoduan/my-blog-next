@@ -18,15 +18,12 @@ const UserProfile: NextPage = () => {
 
   useEffect(() => {
     request.get('/api/user/detail').then((res: any) => {
-      if (res?.code === 0) {
-        form.setFieldsValue(res?.data?.userInfo);
-      }
+      form.setFieldsValue(res?.data?.userInfo);
     });
   }, [form]);
 
   const handleSubmit = async (values: any) => {
-    const res = await request.post('/api/user/update', { ...values });
-    if (res.code !== 0) return message.error(res?.msg || '修改失败');
+    await request.post('/api/user/update', { ...values });
     message.success('修改成功');
   };
 

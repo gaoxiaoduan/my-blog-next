@@ -34,29 +34,25 @@ const Tag: NextPage = () => {
 
   useEffect(() => {
     request.get('/api/tag/get').then((res: any) => {
-      if (res?.code === 0) {
-        const { followTags = [], allTags = [] } = res?.data || {};
-        setFollowTags(followTags);
-        setAllTags(allTags);
-      }
+      const { followTags = [], allTags = [] } = res?.data || {};
+      setFollowTags(followTags);
+      setAllTags(allTags);
     });
   }, [needRefresh]);
 
   const handleFollow = async (tagId: number) => {
-    const res = await request.post('/api/tag/follow', {
+    await request.post('/api/tag/follow', {
       type: 'follow',
       tagId
     })
-    if (res.code !== 0) return message.error(res?.msg || '关注失败');
     message.success('关注成功');
     setNeedRefresh(!needRefresh);
   };
   const handleUnFollow = async (tagId: number) => {
-    const res = await request.post('/api/tag/follow', {
+    await request.post('/api/tag/follow', {
       type: 'unFollow',
       tagId
     })
-    if (res.code !== 0) return message.error(res?.msg || '取关失败');
     message.success('取关成功');
     setNeedRefresh(!needRefresh);
   };

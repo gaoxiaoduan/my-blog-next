@@ -32,7 +32,6 @@ const ListItem: NextPage<IProps> = (props) => {
     const res = await request.delete(`/api/article/remove`, {
       data: { id }
     });
-    if (res.code !== 0) return message.error(res.msg || '未知错误');
     successDeleteHooks?.(id);
     message.success(res.msg || '删除成功')
   }

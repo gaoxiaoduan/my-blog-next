@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from 'axios';
 
 const requestInstance = axios.create({
@@ -11,7 +12,13 @@ requestInstance.interceptors.request.use(
 
 requestInstance.interceptors.response.use(
   (response) => {
-    if (response.status === 200) return response.data;
+    if (response.status === 200) {
+      if (response.data.code !== 0) {
+        return message.error(response.data.msg || '未知错误');
+      }
+      return response.data;
+    }
+
     return {
       code: -1,
       msg: '未知错误',

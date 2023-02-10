@@ -40,10 +40,8 @@ const Navbar: NextPage = () => {
 
   const handleLoginOut = async () => {
     const res = await request.post('/api/user/loginOut');
-    if (res.code === 0) {
-      store.user.setUserInfo({});
-      message.success(res.msg || '退出成功');
-    } else message.error(res.msg || '未知错误');
+    store.user.setUserInfo({});
+    message.success(res.msg || '退出成功');
   };
 
   const onSearch = async (value: string) => {

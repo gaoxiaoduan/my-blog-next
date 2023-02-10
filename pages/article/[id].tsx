@@ -66,11 +66,10 @@ const ArticleInfo: NextPage<IProps> = (props) => {
   const [comments, setComments] = useState(article?.comments || []);
 
   const handleComment = async () => {
-    const res = await request.post('/api/comment/publish', {
+    await request.post('/api/comment/publish', {
       articleId: article?.id,
       content: inputVal,
     });
-    if (res.code !== 0) return message.error(res.msg || '未知错误');
     const newComments = [
       {
         id: Math.floor(Math.random() * 10000),

@@ -7,6 +7,14 @@ export const EXCEPTION_USER = {
     code: 1002,
     msg: '未找到用户',
   },
+  REMOVE_FAILED: {
+    code: 1004,
+    msg: '删除用户失败',
+  },
+  GET_LIST_FAILED: {
+    code: 1005,
+    msg: '获取用户列表失败',
+  },
 };
 
 export const EXCEPTION_ARTICLE = {
@@ -26,6 +34,10 @@ export const EXCEPTION_ARTICLE = {
     code: 2004,
     msg: '删除文章失败',
   },
+  GET_LIST_FAILED: {
+    code: 2005,
+    msg: '获取文章列表失败',
+  },
 };
 
 export const EXCEPTION_TAG = {
@@ -39,5 +51,13 @@ export const EXCEPTION_COMMENT = {
   PUBLISH_FAILED: {
     code: 4001,
     msg: '发表失败',
+  },
+  REMOVE_FAILED: {
+    code: 4004,
+    msg: '删除评论失败',
+  },
+  GET_LIST_FAILED: {
+    code: 4005,
+    msg: '获取评论列表失败',
   },
 };

@@ -11,10 +11,8 @@ const Classification: NextPage = () => {
     const [allTags, setAllTags] = useState<ITag[]>([]);
     useEffect(() => {
         request.get('/api/tag/get').then((res: any) => {
-            if (res?.code === 0) {
-                const { allTags = [] } = res?.data || {};
-                setAllTags(allTags)
-            }
+            const { allTags = [] } = res?.data || {};
+            setAllTags(allTags)
         });
     }, [])
 

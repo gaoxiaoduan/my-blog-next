@@ -25,9 +25,7 @@ const NewEditor: NextPage = () => {
 
   useEffect(() => {
     request.get('/api/tag/get').then((res: any) => {
-      if (res?.code === 0) {
-        setAllTags(res?.data?.allTags || []);
-      }
+      setAllTags(res?.data?.allTags || []);
     });
   }, []);
 
@@ -38,12 +36,11 @@ const NewEditor: NextPage = () => {
   const handlePublish = async () => {
     if (!title) return message.warning('请输入文章标题～');
     if (tagIds.length === 0) return message.warning('请选择标签～')
-    const res = await request.post('/api/article/publish', {
+    await request.post('/api/article/publish', {
       title,
       content,
       tagIds,
     });
-    if (res.code !== 0) return message.error(res.msg || '未知错误');
     userId ? push(`/user/${userId}`) : push('/');
     message.success('发布成功', 1);
   };

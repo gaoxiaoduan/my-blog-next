@@ -47,13 +47,9 @@ const Login: NextPage<IProps> = (props) => {
       ...form,
       identity_type: 'phone',
     });
-    if (res.code === 0) {
-      onClose?.();
-      message.success('登录成功');
-      store.user.setUserInfo(res.data);
-    } else {
-      return message.error(res.msg || '未知错误');
-    }
+    onClose?.();
+    message.success('登录成功');
+    store.user.setUserInfo(res.data);
   };
 
   const handleOAuthGithub = () => {
@@ -66,11 +62,10 @@ const Login: NextPage<IProps> = (props) => {
     if (!form?.phone || form.phone.length !== 11) {
       return message.info('请输入有效手机号～');
     }
-    const res = await request.post('/api/user/sendVerifyCode', {
+    await request.post('/api/user/sendVerifyCode', {
       to: form?.phone,
       templateId: 1,
     });
-    if (res.code !== 0) return message.error(res?.msg || '未知错误');
     setIsVerifyCode(true);
   };
 
