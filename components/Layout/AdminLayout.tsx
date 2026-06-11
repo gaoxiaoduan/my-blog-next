@@ -43,7 +43,7 @@ const AdminLayout: NextPage<IProps> = ({ children }) => {
     return (
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-                <Image src='/images/logo.png' width='40px' height='40px' alt='BLOG' />
+                <Image src='/images/logo.png' width={40} height={40} alt='BLOG' />
                 <Menu theme="dark" onClick={handleMenuClink} defaultSelectedKeys={[pathname]} mode="inline" items={items} />
             </Sider>
 

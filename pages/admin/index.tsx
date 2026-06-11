@@ -22,7 +22,7 @@ const AdminPage: NextPage = () => {
             <div className={styles.formArea}>
 
                 <div className={styles.headerArea}>
-                    <Image src='/images/logo.png' width='40px' height='40px' alt='BLOG' />
+                    <Image src='/images/logo.png' width={40} height={40} alt='BLOG' />
                     <span>Blog 后台管理</span>
                 </div>
 

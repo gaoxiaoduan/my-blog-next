@@ -85,7 +85,7 @@ const Navbar: NextPage = () => {
   return (
     <div className={styles.navbar}>
       <section className={styles.logoArea} onClick={() => push('/')}>
-        <Image src='/images/logo.png' width='40px' height='40px' alt='BLOG' />
+        <Image src='/images/logo.png' width={40} height={40} alt='BLOG' />
       </section>
       <section className={styles.linkArea}>
         {navs.map((nav) => (
